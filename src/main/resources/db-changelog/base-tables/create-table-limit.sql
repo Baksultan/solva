@@ -1,0 +1,1 @@
+select *From pg_am;

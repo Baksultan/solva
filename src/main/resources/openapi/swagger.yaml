@@ -1,0 +1,335 @@
+openapi: 3.0.0
+info:
+  title: Спецификация Solva OpenAPI
+  version: 0.0.1
+servers:
+  - url: http://localhost:9000
+    description: Server
+paths:
+
+  /internal/getTransaction/{transactionId}:
+    get:
+      summary: Получить транзакцию по ID
+      tags:
+        - Get Transaction By ID
+      operationId: getTransactionById
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          description: Идентификатор транзакции
+          schema:
+            type: string
+          example: 4
+      responses:
+        '200':
+          description: Успешный ответ с одной транзакцией
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionResponse"
+        'default':
+          description: Всё нестандартное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /internal/addTransaction:
+    post:
+      summary: Добавить новую транзакцию
+      tags:
+        - Add New Transaction
+      operationId: addNewTransaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionRequest"
+      responses:
+        '200':
+          description: Успешно создано
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionResponse"
+        'default':
+          description: Всё нестандартное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+
+  /client/getAllTransactions/{clientBankAcc}:
+    get:
+      summary: Получить все транзакции клиента по номеру счета
+      tags:
+        - Get All Transactions By Client Bank Account
+      operationId: getAllTransactionsByClientBankAcc
+      parameters:
+        - name: clientBankAcc
+          in: path
+          required: true
+          description: Номер счета клиента
+          schema:
+            type: string
+          example: 1569845535
+      responses:
+        '200':
+          description: Успешный ответ со всеми транзакциями клиента
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionResponse"
+        'default':
+          description: Всё нестандартное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /client/getTransactions/{clientBankAcc}:
+    get:
+      summary: Получить транзакции клиента, превысившие лимит по номеру счета
+      tags:
+        - Get Client Transactions By Bank Account
+      operationId: getTransactionsByClientBankAcc
+      parameters:
+        - name: clientBankAcc
+          in: path
+          required: true
+          description: Номер счета клиента
+          schema:
+            type: string
+          example: 1569845535
+      responses:
+        '200':
+          description: Успешный ответ со всеми транзакциями клиента, превысивших лимит
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionResponse"
+        'default':
+          description: Всё нестандартное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /client/getLimits/{clientBankAcc}:
+    get:
+      summary: Получить список лимитов клиента
+      tags:
+        - Get Client Limits By Bank Account
+      operationId: getAllLimitsByClientAcc
+      parameters:
+        - name: clientBankAcc
+          in: path
+          required: true
+          description: Номер счета клиента
+          schema:
+            type: string
+          example: 1569845535
+      responses:
+        '200':
+          description: Успешный ответ со всеми лимитами клиента
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Limits"
+        'default':
+          description: Всё нестандартное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /client/addNewLimit:
+    post:
+      summary: Добавить новый лимит клиенту
+      tags:
+        - Add New Limit
+      operationId: addNewLimit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LimitRequest"
+      responses:
+        '200':
+          description: Успешно создано
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Limit"
+        'default':
+          description: Всё нестандартное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+
+
+
+
+
+
+
+
+
+
+
+components:
+  schemas:
+    TransactionRequest:
+      type: object
+      required:
+        - accountFrom
+        - accountTo
+        - type
+        - currencyShortname
+        - sum
+      properties:
+        accountFrom:
+          type: string
+          example: "1259486328"
+        accountTo:
+          type: string
+          example: "1962463875"
+        type:
+          type: string
+          enum:
+            - "service"
+            - "product"
+        currencyShortname:
+          type: string
+          enum:
+            - "USD"
+            - "RUB"
+            - "KZT"
+        sum:
+          type: number
+          example: 1200
+
+    TransactionResponse:
+      type: object
+      required:
+        - id
+        - accountFrom
+        - accountTo
+        - type
+        - currencyShortname
+        - sum
+        - expenseCategory
+        - datetime
+      properties:
+        id:
+          type: number
+          example: 4
+        accountFrom:
+          type: string
+          example: "1259486328"
+        accountTo:
+          type: string
+          example: "1962463875"
+        type:
+          type: string
+          enum:
+            - "service"
+            - "product"
+        currencyShortname:
+          type: string
+          enum:
+            - "USD"
+            - "RUB"
+            - "KZT"
+        sum:
+          type: number
+          example: 1200.00
+        expenseCategory:
+          type: boolean
+          example: true
+        datetime:
+          type: string
+          example: "2023-09-19T20:30:59.9843454+06:00"
+
+    TransactionsResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/TransactionResponse"
+
+    TransactionsRequest:
+      type: array
+      items:
+        $ref: "#/components/schemas/TransactionRequest"
+
+    Limit:
+      type: object
+      required:
+        - id
+        - productLimit
+        - serviceLimit
+        - limitDate
+      properties:
+        id:
+          type: number
+          example: 4
+        productLimit:
+          type: number
+          example: 2500
+        serviceLimit:
+          type: number
+          example: 1000
+        type:
+          type: string
+          enum:
+            - "service"
+            - "product"
+        limitDate:
+          type: string
+          example: "2023-09-20T00:14:08.806322+06:00"
+
+    LimitRequest:
+      type: object
+      required:
+        - bankAcc
+        - product_limit
+        - serviceLimit
+      properties:
+        bankAcc:
+          type: string
+          example: "1568489763"
+        product_limit:
+          type: number
+          example: 2500
+        serviceLimit:
+          type: number
+          example: 1000
+
+    Limits:
+      type: array
+      items:
+        $ref: "#/components/schemas/Limit"
+
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: "BAD_REQUEST"

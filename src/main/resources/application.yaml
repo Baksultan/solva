@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/debug
+    username: debug
+    password: debug
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  liquibase:
+    change-log: db-changelog/db-changelog.yaml
+
+server:
+  port: 9000
+
+exchange:
+  api:
+    url: https://api.twelvedata.com/exchange_rate
+    key: 9793411f8a8f4bee8e09b3fba03847cb
+

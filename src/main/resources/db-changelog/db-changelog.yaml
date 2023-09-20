@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - include:
+      file: classpath:/db-changelog/base-tables/create-currency.sql
+  - include:
+      file: classpath:/db-changelog/base-tables/insert-currency.sql
+  - include:
+      file: classpath:/db-changelog/base-tables/create-table-limit.sql
+  - include:
+      file: classpath:/db-changelog/base-tables/create-customer.sql
+  - include:
+      file: classpath:/db-changelog/base-tables/create-limit.sql
+  - include:
+      file: classpath:/db-changelog/base-tables/create-table-transaction.sql
+  - include:
+      file: classpath:/db-changelog/base-tables/insert-customers.sql
