@@ -9,7 +9,7 @@
 
    Вы можете склонировать репозиторий с помощью следующей команды Git: 
    
-   'git clone <URL репозитория>'
+   'git clone https://github.com/Baksultan/solva'
 
 
 2. **Запустите Docker Compose**
