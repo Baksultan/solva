@@ -26,7 +26,7 @@ public class CustomerRestController {
         return customerService.getAllCustomers();
     }
 
-    @GetMapping(value = "/bankAcc/{bankAcc}")
+    @GetMapping(value = "/getCustomer/{bankAcc}")
     public ResponseEntity<Customer> getCustomerByBankAcc(@PathVariable(name = "bankAcc") String bankAcc) {
         return customerService.getCustomerByBankAcc(bankAcc);
     }
