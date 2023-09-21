@@ -3,6 +3,7 @@ package kz.solva.service.customerService;
 import kz.solva.model.entity.Customer;
 import kz.solva.model.entity.Limit;
 import kz.solva.model.requestModel.CustomerRequest;
+import kz.solva.model.requestModel.CustomerUpdateRequest;
 import kz.solva.repository.CustomerRepository;
 import kz.solva.repository.LimitRepository;
 import lombok.RequiredArgsConstructor;
@@ -78,14 +79,18 @@ public class CustomerService {
         }
     }
 
-    public ResponseEntity<Customer> updateCustomer(Customer customer) {
+    public ResponseEntity<Customer> updateCustomer(CustomerUpdateRequest customer) {
 
-        if (customer == null) {
+        Customer c = customerRepository.getCustomersById(customer.getId());
+
+        if (c == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
+        c.setBankAccount(customer.getBank_account());
+
         return ResponseEntity.status(HttpStatus.OK)
-                .body(customerRepository.save(customer));
+                .body(customerRepository.save(c));
     }
 
 

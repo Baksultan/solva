@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/internal")
 @RequiredArgsConstructor
@@ -32,6 +34,21 @@ public class InternalAPI {
     @PostMapping(value = "/addCustomer")
     public ResponseEntity<Customer> addNewCustomer(@RequestBody CustomerRequest customer) {
         return customerService.addCustomer(customer);
+    }
+
+    @GetMapping(value = "/getAllCustomers")
+    public ResponseEntity<List<Customer>> getAllCustomers() {
+        return customerService.getAllCustomers();
+    }
+
+    @GetMapping(value = "/getCustomerById/{id}")
+    public ResponseEntity<Customer> getCustomerById(@PathVariable(name = "id") Long id) {
+        return customerService.getCustomer(id);
+    }
+
+    @GetMapping(value = "/getCustomer/{bankAcc}")
+    public ResponseEntity<Customer> getCustomerByBankAcc(@PathVariable(name = "bankAcc") String bankAcc) {
+        return customerService.getCustomerByBankAcc(bankAcc);
     }
 
 }

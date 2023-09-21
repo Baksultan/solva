@@ -2,6 +2,7 @@ package kz.solva.controller;
 
 import kz.solva.model.entity.Customer;
 import kz.solva.model.requestModel.CustomerRequest;
+import kz.solva.model.requestModel.CustomerUpdateRequest;
 import kz.solva.service.customerService.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class CustomerRestController {
     }
 
     @PutMapping(value = "/update")
-    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<Customer> updateCustomer(@RequestBody CustomerUpdateRequest customer) {
         return customerService.updateCustomer(customer);
     }
 

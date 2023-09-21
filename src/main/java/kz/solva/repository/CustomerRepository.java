@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    public Customer getCustomersByBankAccount(String bankAccount);
+    Customer getCustomersByBankAccount(String bankAccount);
+
+    Customer getCustomersById(Long id);
 
 }
