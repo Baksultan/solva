@@ -5,7 +5,7 @@ import kz.solva.model.entity.Limit;
 import kz.solva.model.requestModel.CustomerRequest;
 import kz.solva.repository.CustomerRepository;
 import kz.solva.repository.LimitRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,12 +15,13 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerService {
 
-    @Autowired
-    private CustomerRepository customerRepository;
-    @Autowired
-    private LimitRepository limitRepository;
+    private final CustomerRepository customerRepository;
+
+    private final LimitRepository limitRepository;
+
 
     public ResponseEntity<Customer> getCustomer(Long id) {
         Customer customer = customerRepository.findById(id).orElse(null);
@@ -48,21 +49,21 @@ public class CustomerService {
     }
 
     public ResponseEntity<Customer> addCustomer(CustomerRequest c) {
-        if (customerRepository.getCustomersByBankAccount(c.getBankAcc()) != null) {
+        if (customerRepository.getCustomersByBankAccount(c.getBank_account()) != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         } else {
             Customer customer = new Customer();
-            customer.setBankAccount(c.getBankAcc());
+            customer.setBankAccount(c.getBank_account());
             Limit limit = new Limit();
 
-            if (c.getProductLimit() != null) {
-                limit.setProductLimit(c.getProductLimit());
+            if (c.getProduct_limit() != null) {
+                limit.setProductLimit(c.getProduct_limit());
             } else {
                 limit.setProductLimit(new BigDecimal("1000"));
             }
 
-            if (c.getServiceLimit() != null) {
-                limit.setServiceLimit(c.getServiceLimit());
+            if (c.getService_limit() != null) {
+                limit.setServiceLimit(c.getService_limit());
             } else {
                 limit.setServiceLimit(new BigDecimal("1000"));
             }
@@ -77,16 +78,15 @@ public class CustomerService {
         }
     }
 
-    public Customer updateCustomer(Customer customer) {
-        return customerRepository.save(customer);
+    public ResponseEntity<Customer> updateCustomer(Customer customer) {
+
+        if (customer == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(customerRepository.save(customer));
     }
 
-    public void deleteCustomerById(Long id) {
-        customerRepository.deleteById(id);
-    }
-
-    public void deleteCustomer(Customer customer) {
-        customerRepository.delete(customer);
-    }
 
 }

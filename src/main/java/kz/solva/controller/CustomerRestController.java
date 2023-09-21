@@ -16,7 +16,7 @@ public class CustomerRestController {
 
     private final CustomerService customerService;
 
-    @GetMapping(value = "id/{id}")
+    @GetMapping(value = "/id/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable(name = "id") Long id) {
         return customerService.getCustomer(id);
     }
@@ -26,7 +26,7 @@ public class CustomerRestController {
         return customerService.getAllCustomers();
     }
 
-    @GetMapping(value = "bankAcc/{bankAcc}")
+    @GetMapping(value = "/bankAcc/{bankAcc}")
     public ResponseEntity<Customer> getCustomerByBankAcc(@PathVariable(name = "bankAcc") String bankAcc) {
         return customerService.getCustomerByBankAcc(bankAcc);
     }
@@ -37,13 +37,8 @@ public class CustomerRestController {
     }
 
     @PutMapping(value = "/update")
-    public Customer updateCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
         return customerService.updateCustomer(customer);
-    }
-
-    @DeleteMapping(value = "{id}")
-    public void deleteCustomer(@PathVariable("id") Long id) {
-        customerService.deleteCustomerById(id);
     }
 
 

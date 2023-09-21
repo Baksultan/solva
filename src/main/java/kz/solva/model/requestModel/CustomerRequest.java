@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerRequest {
-    private String bankAcc;
-    private BigDecimal productLimit;
-    private BigDecimal serviceLimit;
+    private String bank_account;
+    private BigDecimal product_limit;
+    private BigDecimal service_limit;
 }

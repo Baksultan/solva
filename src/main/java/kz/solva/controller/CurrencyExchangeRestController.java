@@ -24,7 +24,7 @@ public class CurrencyExchangeRestController {
         return exchangeService.getCurrencyExchanges();
     }
 
-    @GetMapping(value = "{c1}/{c2}")
+    @GetMapping(value = "/{c1}/{c2}")
     public ResponseEntity<Double> getRate(@PathVariable(name = "c1") String c1, @PathVariable(name = "c2") String c2) {
         return exchangeService.getRate(c1, c2);
     }

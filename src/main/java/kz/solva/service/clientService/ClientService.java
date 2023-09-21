@@ -18,7 +18,6 @@ import java.util.List;
 public class ClientService {
 
     private final CustomerService customerService;
-
     private final TransactionRepository transactionRepository;
 
     public ResponseEntity<List<TransactionResponse>> getClientTransactions(String bankAcc) {

@@ -18,7 +18,7 @@ public class LimitRestController {
 
     private final LimitService limitService;
 
-    @GetMapping(value = "{userBankAcc}")
+    @GetMapping(value = "/{userBankAcc}")
     public ResponseEntity<List<Limit>> getLimits(@PathVariable(name = "userBankAcc") String userBankAcc) {
         return limitService.getLimitsByBankAcc(userBankAcc);
     }
