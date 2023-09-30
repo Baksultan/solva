@@ -1,5 +1,6 @@
 package kz.solva.service.transactionService;
 
+import jakarta.transaction.Transactional;
 import kz.solva.model.entity.Customer;
 import kz.solva.model.entity.Limit;
 import kz.solva.model.entity.Transaction;
@@ -34,6 +35,7 @@ public class TransactionService {
     private LimitService limitService;
 
 
+    @Transactional
     public ResponseEntity<TransactionResponse> addTransaction(TransactionRequest transactionRequest) {
 
         Customer c1 = customerRepository.getCustomersByBankAccount(transactionRequest.getAccountFromBankAcc());

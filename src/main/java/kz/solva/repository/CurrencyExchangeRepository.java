@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CurrencyExchangeRepository extends JpaRepository<CurrencyExchange, Long> {
-    public CurrencyExchange getCurrencyExchangeRateByFirstCurrencyAndSecondCurrency(String c1, String c2);
+    CurrencyExchange getCurrencyExchangeRateByFirstCurrencyAndSecondCurrency(String c1, String c2);
 }
